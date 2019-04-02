@@ -1,0 +1,4 @@
+Verified playable games:
+Airstriker-Genesis
+SpaceInvaders
+and more

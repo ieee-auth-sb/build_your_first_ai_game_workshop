@@ -1,10 +1,10 @@
-import retro, cv2
+import retro, cv2, gym
 import numpy as np
 
 # Load game's environment
 ## DOWNLOAD MORE GAMES
 def init():
-    env = retro.make(game='Airstriker-Genesis')
+    env = gym.make('SpaceInvaders-v0')
     # Check game's specs
     actions = env.action_space.n
     print(actions)
