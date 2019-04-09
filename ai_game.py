@@ -39,7 +39,8 @@ memory = deque()
 # Initialize neural network
 model = Sequential()
 model.add(Dense(128, input_shape=(84,84), activation='relu'))
-# model.add(Dense(128, activation='relu'))
+model.add(Dense(512, activation='relu'))
+model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(actions, activation='linear'))
 model.compile(loss='mse', optimizer=Adam())
@@ -52,8 +53,7 @@ def act(state):
     act_values = model.predict(state)
     return np.argmax(act_values[0])  # returns action
 
-
-# Train model
+# Collect data
 for e in range(10):
 
     state = env.reset()
@@ -62,7 +62,7 @@ for e in range(10):
     for play in range(100):
         # Get action
         action = act(state)
-        next_state, reward, done, _ =env.step(action)
+        next_state, reward, done, _ = env.step(action)
         next_state = preprocess(next_state)
 
         memory.append((state, action, reward, next_state, done))
@@ -72,7 +72,7 @@ for e in range(10):
             print('Done at play: ', play)
             break
 
-
+# Train model
 minibatch = random.sample(memory, batch_size)
 for state, action, reward, next_state, done in minibatch:
     target = reward
@@ -84,3 +84,6 @@ for state, action, reward, next_state, done in minibatch:
     model.fit(state, target_f, epochs=1, verbose=0)
 if epsilon > epsilon_min:
     epsilon *= epsilon_decay
+
+
+# Test game
