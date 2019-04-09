@@ -72,18 +72,18 @@ for e in range(10):
             print('Done at play: ', play)
             break
 
-# Train model
-minibatch = random.sample(memory, batch_size)
-for state, action, reward, next_state, done in minibatch:
-    target = reward
-    if not done:
-      target = reward + gamma * \
-               np.amax(model.predict(next_state)[0])
-    target_f = model.predict(state)
-    target_f[0][action] = target
-    model.fit(state, target_f, epochs=1, verbose=0)
-if epsilon > epsilon_min:
-    epsilon *= epsilon_decay
+    # Train model
+    minibatch = random.sample(memory, batch_size)
+    for state, action, reward, next_state, done in minibatch:
+        target = reward
+        if not done:
+          target = reward + gamma * \
+                   np.amax(model.predict(next_state)[0])
+        target_f = model.predict(state)
+        target_f[0][action] = target
+        model.fit(state, target_f, epochs=1, verbose=0)
+    if epsilon > epsilon_min:
+        epsilon *= epsilon_decay
 
 
 # Test game
