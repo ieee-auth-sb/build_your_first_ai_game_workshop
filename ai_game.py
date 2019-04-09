@@ -12,11 +12,11 @@ from keras.layers.core import Activation, Dropout, Flatten, Dense
 
 # Preprocess
 # # DOWNLOAD CV2
-# def preprocess(observation):
-#     observation = cv2.cvtColor(cv2.resize(observation, (84, 110)), cv2.COLOR_BGR2GRAY)
-#     observation = observation[26:110,:]
-#     ret, observation = cv2.threshold(observation,1,255,cv2.THRESH_BINARY)
-#     return np.reshape(observation,(84,84,1))
+def preprocess(observation):
+    observation = cv2.cvtColor(cv2.resize(observation, (84, 110)), cv2.COLOR_BGR2GRAY)
+    observation = observation[26:110,:]
+    ret, observation = cv2.threshold(observation,1,255,cv2.THRESH_BINARY)
+    return np.reshape(observation,(84,84,1))
 
 
 
@@ -71,3 +71,16 @@ for e in range(10):
         if done:
             print('Done at play: ', play)
             break
+
+
+minibatch = random.sample(memory, batch_size)
+for state, action, reward, next_state, done in minibatch:
+    target = reward
+    if not done:
+      target = reward + gamma * \
+               np.amax(model.predict(next_state)[0])
+    target_f = model.predict(state)
+    target_f[0][action] = target
+    model.fit(state, target_f, epochs=1, verbose=0)
+if epsilon > epsilon_min:
+    epsilon *= epsilon_decay
