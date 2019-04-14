@@ -61,18 +61,19 @@ for e in range(10):
     state = env.reset()
     state = preprocess(state)
 
-    for play in range(100):
+    for play in range(1000):
         # Get action
         action = act(state)
         next_state, reward, done, _ = env.step(action)
         next_state = preprocess(next_state)
-
         memory.append((state, action, reward, next_state, done))
-
+        env.render()
         state = next_state
         if done:
             print('Done at play: ', play)
             break
+    if not done:
+        print('Play stopped at: ', play)
 
     # Train model
     minibatch = random.sample(memory, batch_size)
