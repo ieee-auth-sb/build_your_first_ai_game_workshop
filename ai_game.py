@@ -11,12 +11,11 @@ from keras.optimizers import Adam
 from keras.layers.core import Activation, Dropout, Flatten, Dense
 
 # Preprocess
-# # DOWNLOAD CV2
 def preprocess(observation):
     observation = cv2.cvtColor(cv2.resize(observation, (84, 110)), cv2.COLOR_BGR2GRAY)
     observation = observation[26:110,:]
     ret, observation = cv2.threshold(observation,1,255,cv2.THRESH_BINARY)
-    return np.reshape(observation,(84,84,1))
+    return np.reshape(observation,(1,84,84,1))
 
 
 
