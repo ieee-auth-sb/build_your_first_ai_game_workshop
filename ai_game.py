@@ -76,17 +76,19 @@ for e in range(10):
         print('Play stopped at: ', play)
 
     # Train model
+    # Sample plays
     minibatch = random.sample(memory, batch_size)
     for state, action, reward, next_state, done in minibatch:
         target = reward
+        # Update target
         if not done:
-          target = reward + gamma * \
-                   np.amax(model.predict(next_state)[0])
-        target_f = model.predict(state)
+            target = reward + gamma * \
+                np.amax(model.predict(next_state, batch_size=1))
+        target_f = model.predict(state, batch_size=1)
         target_f[0][action] = target
         model.fit(state, target_f, epochs=1, verbose=0)
     if epsilon > epsilon_min:
         epsilon *= epsilon_decay
 
 
-# Test game
+# TO DO: SAVE MODEL AFTER SOME TIME
