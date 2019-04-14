@@ -37,13 +37,16 @@ memory = deque()
 
 # Initialize neural network
 model = Sequential()
-model.add(Dense(128, input_shape=(84,84), activation='relu'))
-model.add(Dense(512, activation='relu'))
-model.add(Dense(128, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(actions, activation='linear'))
+model.add(Conv2D(32, (8, 8), strides=(
+    4, 4), input_shape=(84, 84, 1), activation='relu'))
+model.add(Conv2D(64, (4, 4), strides=(2, 2), activation='relu'))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(Flatten())
+model.add(Dense((512), activation='relu'))
+model.add(Dense(actions))
 model.compile(loss='mse', optimizer=Adam())
-print("Successfully constructed networks.")
+model.summary()
+print("Model constructed")
 
 # Predict action
 def act(state):
