@@ -26,13 +26,13 @@ actions = env.action_space.n
 # print(actions)
 # print(env.observation_space.shape)
 
-
-# Q-Learning init
-# Q = np.zeros([84, 84, actions])
-# eta = .628
+# # SET CORRECT EPSILONS
 epsilon = 1.
+epsilon_min = 0.1
+epsilon_decay = 0.1
 gamma = .9
 epochs = 5000
+batch_size = 4
 memory = deque()
 
 # Initialize neural network
