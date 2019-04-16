@@ -26,6 +26,18 @@ actions = env.action_space.n
 # print(actions)
 # print(env.observation_space.shape)
 
+#Testing Preprocess Photo
+env.reset()
+action0 = 0  # do nothing
+observation0, reward0, terminal, info = env.step(action0)
+print("Before processing: " + str(np.array(observation0).shape))
+plt.imshow(np.array(observation0))
+plt.show()
+observation0 = preprocess(observation0)
+print("After processing: " + str(np.array(observation0).shape))
+plt.imshow(np.array(np.squeeze(observation0)))
+plt.show()
+
 # # SET CORRECT EPSILONS
 epsilon = 1.
 epsilon_min = 0.1
