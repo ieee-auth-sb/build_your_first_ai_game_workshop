@@ -45,7 +45,9 @@ epsilon_decay = 0.1
 gamma = .9
 epochs = 5000
 batch_size = 4
+episodeNumber = 100
 memory = deque()
+test = False)
 
 # Initialize neural network
 model = Sequential()
@@ -68,16 +70,17 @@ def act(state):
     return np.argmax(act_values[0])  # returns action
 
 # Collect data
-for e in range(10):
-
+for episode in range(episodeNumber):
     state = env.reset()
     state = preprocess(state)
-
-    for play in range(1000):
+    env.render()
+    for play in range(10000):
         # Get action
         action = act(state)
         next_state, reward, done, _ = env.step(action)
         next_state = preprocess(next_state)
+        if (len(memory) > 10000):
+            memory.popleft()
         memory.append((state, action, reward, next_state, done))
         env.render()
         state = next_state
@@ -90,6 +93,7 @@ for e in range(10):
     # Train model
     # Sample plays
     minibatch = random.sample(memory, batch_size)
+    print("Episode: ", episode)
     for state, action, reward, next_state, done in minibatch:
         target = reward
         # Update target
@@ -98,9 +102,10 @@ for e in range(10):
                 np.amax(model.predict(next_state, batch_size=1))
         target_f = model.predict(state, batch_size=1)
         target_f[0][action] = target
-        model.fit(state, target_f, epochs=1, verbose=0)
+        model.fit(state, target_f, epochs=1, verbose=2)
     if epsilon > epsilon_min:
         epsilon *= epsilon_decay
 
 
-# TO DO: SAVE MODEL AFTER SOME TIME
+# SAVE MODEL
+model.save("model.h5")
