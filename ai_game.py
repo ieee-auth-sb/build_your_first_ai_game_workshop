@@ -47,7 +47,7 @@ epochs = 5000
 batch_size = 4
 episodeNumber = 100
 memory = deque()
-test = False)
+test = False
 
 # Initialize neural network
 model = Sequential()
