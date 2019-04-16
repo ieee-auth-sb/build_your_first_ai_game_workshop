@@ -2,11 +2,11 @@ import gym
 import numpy as np
 import sys
 from collections import deque
-# sys.path.append('/usr/local/lib/python2.7/site-packages')
-import cv2
+import cv2, random
+import matplotlib.pyplot as plt
 
 from keras.models import load_model, Sequential
-from keras.layers.convolutional import Convolution2D
+from keras.layers.convolutional import Conv2D
 from keras.optimizers import Adam
 from keras.layers.core import Activation, Dropout, Flatten, Dense
 
