@@ -43,7 +43,6 @@ epsilon = 1.
 epsilon_min = 0.1
 epsilon_decay = 0.1
 gamma = .9
-epochs = 5000
 batch_size = 4
 episodeNumber = 100
 memory = deque()
