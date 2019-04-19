@@ -8,8 +8,17 @@ pip install -r requirements.txt
 ```
 Install the GymAI games with,
 ```bash
+pip install gym[atari]
+```
+or with
+```bash
 pip install git+https://github.com/Kojoley/atari-py.git
 ```
+
+## Presentations
+* A how to Python presentation in `Python-workshop.pdf` is made for beginners to learn the python syntax and how to use basic python libraries, such as numpy and pandas. If this is your first time with python, start from here.
+* The complete workshop presentation is in `BuildYourFirstAIGame.pdf`.
+
 ## File list
 * In `mountain_car.py` a Q-learning algorithm is used to train an agent to play and win the mountain car game, from gym, openAI library, as shown [here](https://gym.openai.com/envs/MountainCar-v0/).
  * In `space_invaders.py` the target is the same. An agent has to learn to win the Atari Space Invaders game. The game environment can be found [here](https://gym.openai.com/envs/SpaceInvaders-v0/). In this case, the environment is much more complex and a simple Q-learning algorithm can't solve quickly and easy enough. Deep learning is used in combination with a Q-table, written in Keras.
